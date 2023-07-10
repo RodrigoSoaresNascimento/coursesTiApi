@@ -14,7 +14,7 @@ public class CourseTiEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_COURSE")
     @SequenceGenerator(name = "SEQ_COURSE", sequenceName = "curso_sequence", allocationSize = 1)
     @Column(name = "course_id", insertable = false, updatable = false)
-    private Integer idCurso;
+    private Integer idCourse;
 
 
     @Column(name = "course_name")
@@ -110,12 +110,12 @@ public class CourseTiEntity {
         this.physicsComponents = physicsComponents;
     }
 
-    public Integer getIdCurso() {
-        return idCurso;
+    public Integer getIdCourse() {
+        return idCourse;
     }
 
-    public void setIdCurso(Integer idCurso) {
-        this.idCurso = idCurso;
+    public void setIdCourse(Integer idCourse) {
+        this.idCourse = idCourse;
     }
 
     public String getCourseName() {
@@ -162,12 +162,12 @@ public class CourseTiEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof CourseTiEntity that)) return false;
-        return getIdCurso().equals(that.getIdCurso());
+        return getIdCourse().equals(that.getIdCourse());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getIdCurso());
+        return Objects.hash(getIdCourse());
     }
 
 }

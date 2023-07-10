@@ -1,5 +1,7 @@
 package com.cursosdeti.apicursosdeti.controller;
 
+import com.cursosdeti.apicursosdeti.dto.PageDTO;
+import com.cursosdeti.apicursosdeti.dto.components.create.ComponentComputingDTO;
 import com.cursosdeti.apicursosdeti.entity.ComponentComputingEntity;
 import com.cursosdeti.apicursosdeti.service.ComponentComputingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,7 @@ public class ComponentComputingController {
     private ComponentComputingService computingService;
 
     @GetMapping("/find-by-id/{idCourse}")
-    public ComponentComputingEntity findById(@PathVariable("idCourse") Integer idCourse){
+    public ComponentComputingDTO findById(@PathVariable("idCourse") Integer idCourse){
         return computingService.getById(idCourse);
     }
 
@@ -36,10 +38,14 @@ public class ComponentComputingController {
     }
 
     @PostMapping("/add/{idCourse}")
-    public ComponentComputingEntity addCourse (@RequestBody ComponentComputingEntity componentComputing,
+    public ComponentComputingDTO addCourse (@RequestBody ComponentComputingDTO componentComputing,
                                                @RequestParam Integer idCourseTi) {
         return computingService.create(componentComputing, idCourseTi);
     }
 
+    @GetMapping("/paginacao-computing")
+    public PageDTO<ComponentComputingDTO> coursesComputing (Integer pagina, Integer qtRegistro){
+        return computingService.listarComponentesComputingPaginado(pagina,qtRegistro);
+    }
 
 }
