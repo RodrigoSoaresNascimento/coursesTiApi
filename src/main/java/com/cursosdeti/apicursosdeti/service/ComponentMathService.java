@@ -3,7 +3,7 @@ package com.cursosdeti.apicursosdeti.service;
 import com.cursosdeti.apicursosdeti.entity.ComponentMathEntity;
 import com.cursosdeti.apicursosdeti.entity.CourseTiEntity;
 import com.cursosdeti.apicursosdeti.repository.ComponentMathRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -11,13 +11,14 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class ComponentMathService {
 
-    @Autowired
-    private ComponentMathRepository repository;
 
-    @Autowired
-    private CourseTiService courseTiService;
+    private final ComponentMathRepository repository;
+
+
+    private final CourseTiService courseTiService;
 
     public ComponentMathEntity getById (Integer idCourse) {
         Optional<ComponentMathEntity> curso = Optional.ofNullable(repository.findById(idCourse)

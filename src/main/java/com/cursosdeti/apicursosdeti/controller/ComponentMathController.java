@@ -2,7 +2,7 @@ package com.cursosdeti.apicursosdeti.controller;
 
 import com.cursosdeti.apicursosdeti.entity.ComponentMathEntity;
 import com.cursosdeti.apicursosdeti.service.ComponentMathService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +11,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/mathCourses")
+@AllArgsConstructor
 public class ComponentMathController {
 
-    @Autowired
-    private ComponentMathService service;
+
+    private final ComponentMathService service;
 
     @GetMapping("/find-by-id/{idCourse}")
     public ComponentMathEntity findById(@PathVariable("idCourse") Integer idCourse){

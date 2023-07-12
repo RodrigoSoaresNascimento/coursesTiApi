@@ -15,11 +15,9 @@ import java.util.List;
 
 @Configuration
 public class OpenAPIConfig {
-    @Value("${bezkoder.openapi.dev-url}")
+    @Value("${rodrigoNascimento.openapi.dev-url}")
     private String devUrl;
 
-    @Value("${bezkoder.openapi.prod-url}")
-    private String prodUrl;
 
     @Bean
     public OpenAPI myOpenAPI() {
@@ -27,24 +25,15 @@ public class OpenAPIConfig {
         devServer.setUrl(devUrl);
         devServer.setDescription("Server URL in Development environment");
 
-        Server prodServer = new Server();
-        prodServer.setUrl(prodUrl);
-        prodServer.setDescription("Server URL in Production environment");
-
-        Contact contact = new Contact();
-        contact.setEmail("bezkoder@gmail.com");
-        contact.setName("BezKoder");
-        contact.setUrl("https://www.bezkoder.com");
 
         License mitLicense = new License().name("MIT License").url("https://choosealicense.com/licenses/mit/");
 
         Info info = new Info()
                 .title("API Course Ti Types")
                 .version("1.0")
-                .contact(contact)
                 .description("A API \"Cursos de TI\" fornece acesso a informações sobre diferentes tipos de cursos relacionados à Tecnologia da Informação (TI). Por meio dessa API, os usuários podem obter detalhes sobre os diversos cursos disponíveis, como programação, banco de dados, segurança da informação, redes, desenvolvimento web, inteligência artificial e muito mais. Cada tipo de curso possui informações relevantes, como descrição, requisitos, duração, certificações associadas e possíveis áreas de atuação após a conclusão do curso. Os desenvolvedores podem utilizar a API \"Cursos de TI\" para exibir os tipos de cursos disponíveis em seus aplicativos, sites ou sistemas, fornecendo aos usuários acesso atualizado e detalhado sobre as opções de aprendizado em TI.").termsOfService("https://www.bezkoder.com/terms")
                 .license(mitLicense);
 
-        return new OpenAPI().info(info).servers(List.of(devServer, prodServer));
+        return new OpenAPI().info(info).servers(List.of(devServer));
     }
 }

@@ -4,17 +4,18 @@ import com.cursosdeti.apicursosdeti.dto.PageDTO;
 import com.cursosdeti.apicursosdeti.dto.components.create.ComponentComputingDTO;
 import com.cursosdeti.apicursosdeti.entity.ComponentComputingEntity;
 import com.cursosdeti.apicursosdeti.service.ComponentComputingService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/computingCourses")
+@AllArgsConstructor
 public class ComponentComputingController {
 
-    @Autowired
-    private ComponentComputingService computingService;
+
+    private final ComponentComputingService computingService;
 
     @GetMapping("/find-by-id/{idCourse}")
     public ComponentComputingDTO findById(@PathVariable("idCourse") Integer idCourse){

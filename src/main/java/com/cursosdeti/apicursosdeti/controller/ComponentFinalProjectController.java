@@ -2,6 +2,7 @@ package com.cursosdeti.apicursosdeti.controller;
 
 import com.cursosdeti.apicursosdeti.entity.ComponentFinalProjectEntity;
 import com.cursosdeti.apicursosdeti.service.ComponentFinalProjectService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,10 +12,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/finalProjectCourses")
+@AllArgsConstructor
 public class ComponentFinalProjectController {
 
-    @Autowired
-    private ComponentFinalProjectService service;
+
+    private final ComponentFinalProjectService service;
 
     @GetMapping("/find-by-id/{idCourse}")
     public ComponentFinalProjectEntity findById(@PathVariable("idCourse") Integer idCourse){

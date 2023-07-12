@@ -3,22 +3,21 @@ package com.cursosdeti.apicursosdeti.service;
 import com.cursosdeti.apicursosdeti.entity.ComponentHumanAndSocialEntity;
 import com.cursosdeti.apicursosdeti.entity.CourseTiEntity;
 import com.cursosdeti.apicursosdeti.repository.ComponentHumanAndSocialRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class ComponentHumanAndSocialService {
 
-    @Autowired
-    private ComponentHumanAndSocialRepository repository;
 
-    @Autowired
-    private CourseTiService courseTiService;
+    private final ComponentHumanAndSocialRepository repository;
+
+    private final CourseTiService courseTiService;
 
     public ComponentHumanAndSocialEntity getById (Integer idCourse) {
         Optional<ComponentHumanAndSocialEntity> curso = Optional.ofNullable(repository.findById(idCourse)

@@ -2,7 +2,7 @@ package com.cursosdeti.apicursosdeti.controller;
 
 import com.cursosdeti.apicursosdeti.entity.ComponentHumanAndSocialEntity;
 import com.cursosdeti.apicursosdeti.service.ComponentHumanAndSocialService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +11,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/humanAndSocialCourses")
+@AllArgsConstructor
 public class ComponentHumanAndSocialController {
 
-    @Autowired
-    private ComponentHumanAndSocialService service;
+
+    private final ComponentHumanAndSocialService service;
 
     @GetMapping("/find-by-id/{idCourse}")
     public ComponentHumanAndSocialEntity findById(@PathVariable("idCourse") Integer idCourse){

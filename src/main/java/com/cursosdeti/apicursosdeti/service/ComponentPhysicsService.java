@@ -3,22 +3,22 @@ package com.cursosdeti.apicursosdeti.service;
 import com.cursosdeti.apicursosdeti.entity.ComponentPhysicsEntity;
 import com.cursosdeti.apicursosdeti.entity.CourseTiEntity;
 import com.cursosdeti.apicursosdeti.repository.ComponentPhysicsRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class ComponentPhysicsService {
 
-    @Autowired
-    private ComponentPhysicsRepository repository;
 
-    @Autowired
-    private CourseTiService courseTiService;
+    private final ComponentPhysicsRepository repository;
+
+
+    private final CourseTiService courseTiService;
 
     public ComponentPhysicsEntity getById (Integer idCourse) {
         Optional<ComponentPhysicsEntity> curso = Optional.ofNullable(repository.findById(idCourse)

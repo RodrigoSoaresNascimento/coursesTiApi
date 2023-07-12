@@ -7,6 +7,7 @@ import com.cursosdeti.apicursosdeti.entity.ComponentComputingEntity;
 import com.cursosdeti.apicursosdeti.entity.CourseTiEntity;
 import com.cursosdeti.apicursosdeti.repository.ComponentComputingRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,16 +18,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class ComponentComputingService {
 
-    @Autowired
-    private ComponentComputingRepository componentComputingRepository;
 
-    @Autowired
-    private CourseTiService courseTiService;
+    private final ComponentComputingRepository componentComputingRepository;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    private final CourseTiService courseTiService;
+
+
+    private final ObjectMapper objectMapper;
 
     public ComponentComputingEntity converterComputingEntity (ComponentComputingCreateDTO computingCreateDTO) {
         return objectMapper.convertValue(computingCreateDTO, ComponentComputingEntity.class);

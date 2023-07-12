@@ -2,17 +2,18 @@ package com.cursosdeti.apicursosdeti.controller;
 
 import com.cursosdeti.apicursosdeti.entity.CourseTiEntity;
 import com.cursosdeti.apicursosdeti.service.CourseTiService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/cursos")
+@AllArgsConstructor
 public class CourseTiController {
 
-    @Autowired
-    private CourseTiService courseTiService;
+
+    private final CourseTiService courseTiService;
 
     @GetMapping("/find-by-id/{idCourse}")
     public CourseTiEntity findById(@PathVariable("idCourse") Integer idCurso) {

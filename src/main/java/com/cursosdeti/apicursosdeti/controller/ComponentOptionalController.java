@@ -2,17 +2,18 @@ package com.cursosdeti.apicursosdeti.controller;
 
 import com.cursosdeti.apicursosdeti.entity.ComponentOptionalEntity;
 import com.cursosdeti.apicursosdeti.service.ComponentOptionalService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/optionalCourses")
+@AllArgsConstructor
 public class ComponentOptionalController {
 
-    @Autowired
-    private ComponentOptionalService service;
+
+    private final ComponentOptionalService service;
 
     @GetMapping("/find-by-id/{idCourse}")
     public ComponentOptionalEntity findById(@PathVariable("idCourse") Integer idCourse){

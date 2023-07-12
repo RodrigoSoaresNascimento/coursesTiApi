@@ -2,17 +2,18 @@ package com.cursosdeti.apicursosdeti.controller;
 
 import com.cursosdeti.apicursosdeti.entity.ComponentPhysicsEntity;
 import com.cursosdeti.apicursosdeti.service.ComponentPhysicsService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/physicsCourses")
+@AllArgsConstructor
 public class ComponentPhysicsController {
 
-    @Autowired
-    private ComponentPhysicsService service;
+
+    private final ComponentPhysicsService service;
 
     @GetMapping("/find-by-id/{idCourse}")
     public ComponentPhysicsEntity findById(@PathVariable("idCourse") Integer idCourse){

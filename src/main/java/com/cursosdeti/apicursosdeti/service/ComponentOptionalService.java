@@ -3,22 +3,23 @@ package com.cursosdeti.apicursosdeti.service;
 import com.cursosdeti.apicursosdeti.entity.ComponentOptionalEntity;
 import com.cursosdeti.apicursosdeti.entity.CourseTiEntity;
 import com.cursosdeti.apicursosdeti.repository.ComponentOptionalRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class ComponentOptionalService {
 
-    @Autowired
-    private ComponentOptionalRepository repository;
 
-    @Autowired
-    private CourseTiService courseTiService;
+    private final ComponentOptionalRepository repository;
+
+
+    private final CourseTiService courseTiService;
 
     public ComponentOptionalEntity getById (Integer idCourse) {
         Optional<ComponentOptionalEntity> curso = Optional.ofNullable(repository.findById(idCourse)

@@ -2,7 +2,7 @@ package com.cursosdeti.apicursosdeti.service;
 
 import com.cursosdeti.apicursosdeti.entity.CourseTiEntity;
 import com.cursosdeti.apicursosdeti.repository.CourseTiRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -10,10 +10,11 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class CourseTiService {
 
-    @Autowired
-    private CourseTiRepository courseTiRepository;
+
+    private final CourseTiRepository courseTiRepository;
 
     public CourseTiEntity getByid(Integer idCourse){
         Optional<CourseTiEntity> curso = Optional.ofNullable(courseTiRepository.findById(idCourse)
