@@ -1,11 +1,14 @@
 package com.cursosdeti.apicursosdeti.controller;
 
+import com.cursosdeti.apicursosdeti.dto.courseTi.CourseTiDTO;
 import com.cursosdeti.apicursosdeti.entity.CourseTiEntity;
 import com.cursosdeti.apicursosdeti.service.CourseTiService;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/cursos")
@@ -16,18 +19,18 @@ public class CourseTiController {
     private final CourseTiService courseTiService;
 
     @GetMapping("/find-by-id/{idCourse}")
-    public CourseTiEntity findById(@PathVariable("idCourse") Integer idCurso) {
+    public CourseTiDTO findById(@PathVariable("idCourse") Integer idCurso) {
         return courseTiService.getByid(idCurso);
     }
 
     @GetMapping("/findAll")
-    public Page<CourseTiEntity> searchCourses (Pageable pageable){
-        return courseTiService.findAll(pageable);
+    public List<CourseTiDTO> searchCourses (){
+        return courseTiService.findAll();
     }
 
     @PutMapping("/update-course")
-    public CourseTiEntity updateCourse (@RequestParam Integer idCourse,
-                                        @RequestBody CourseTiEntity cursoUpdate){
+    public CourseTiDTO updateCourse (@RequestParam Integer idCourse,
+                                        @RequestBody CourseTiDTO cursoUpdate){
         return courseTiService.update(cursoUpdate, idCourse);
     }
 
@@ -37,8 +40,9 @@ public class CourseTiController {
     }
 
     @PostMapping("/add")
-    public CourseTiEntity addCourse (@RequestBody CourseTiEntity courseTi) {
-        return courseTiService.create(courseTi);
+    public ResponseEntity<CourseTiDTO> addCourse (@RequestBody CourseTiDTO courseTi) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(courseTiService.create(courseTi));
     }
 
 }

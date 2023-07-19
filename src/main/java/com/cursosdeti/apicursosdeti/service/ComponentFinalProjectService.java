@@ -1,5 +1,6 @@
 package com.cursosdeti.apicursosdeti.service;
 
+import com.cursosdeti.apicursosdeti.dto.courseTi.CourseTiDTO;
 import com.cursosdeti.apicursosdeti.entity.ComponentFinalProjectEntity;
 import com.cursosdeti.apicursosdeti.entity.CourseTiEntity;
 import com.cursosdeti.apicursosdeti.repository.ComponentFinalProjectRepository;
@@ -27,7 +28,8 @@ public class ComponentFinalProjectService {
 
     public ComponentFinalProjectEntity create (ComponentFinalProjectEntity componentFinalProject, Integer idCourseTi){
 
-        CourseTiEntity courseTi = courseTiService.getByid(idCourseTi);
+        CourseTiDTO courseTiDTO = courseTiService.getByid(idCourseTi);
+        CourseTiEntity courseTi = courseTiService.converterParaCourseTiEntity(courseTiDTO);
 
         ComponentFinalProjectEntity finalProjectEntity = new ComponentFinalProjectEntity();
         finalProjectEntity.setClassHours(componentFinalProject.getClassHours());

@@ -1,5 +1,6 @@
 package com.cursosdeti.apicursosdeti.service;
 
+import com.cursosdeti.apicursosdeti.dto.courseTi.CourseTiDTO;
 import com.cursosdeti.apicursosdeti.entity.ComponentHumanAndSocialEntity;
 import com.cursosdeti.apicursosdeti.entity.CourseTiEntity;
 import com.cursosdeti.apicursosdeti.repository.ComponentHumanAndSocialRepository;
@@ -28,7 +29,8 @@ public class ComponentHumanAndSocialService {
 
     public ComponentHumanAndSocialEntity create (ComponentHumanAndSocialEntity componentHumanAndSocial, Integer idCourseTi){
 
-        CourseTiEntity courseTi = courseTiService.getByid(idCourseTi);
+        CourseTiDTO courseTiDTO = courseTiService.getByid(idCourseTi);
+        CourseTiEntity courseTi = courseTiService.converterParaCourseTiEntity(courseTiDTO);
 
         ComponentHumanAndSocialEntity humanAndSocialEntity = new ComponentHumanAndSocialEntity();
         humanAndSocialEntity.setClassHours(componentHumanAndSocial.getClassHours());

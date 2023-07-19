@@ -1,5 +1,6 @@
 package com.cursosdeti.apicursosdeti.service;
 
+import com.cursosdeti.apicursosdeti.dto.courseTi.CourseTiDTO;
 import com.cursosdeti.apicursosdeti.entity.ComponentPhysicsEntity;
 import com.cursosdeti.apicursosdeti.entity.CourseTiEntity;
 import com.cursosdeti.apicursosdeti.repository.ComponentPhysicsRepository;
@@ -29,7 +30,8 @@ public class ComponentPhysicsService {
 
     public ComponentPhysicsEntity create (ComponentPhysicsEntity componentPhysics, Integer idCourseTi){
 
-        CourseTiEntity courseTi = courseTiService.getByid(idCourseTi);
+        CourseTiDTO courseTiDTO = courseTiService.getByid(idCourseTi);
+        CourseTiEntity courseTi = courseTiService.converterParaCourseTiEntity(courseTiDTO);
 
         ComponentPhysicsEntity physicsEntity = new ComponentPhysicsEntity();
         physicsEntity.setClassHours(componentPhysics.getClassHours());

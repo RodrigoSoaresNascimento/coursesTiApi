@@ -1,12 +1,13 @@
 package com.cursosdeti.apicursosdeti.service;
 
+import com.cursosdeti.apicursosdeti.dto.courseTi.CourseTiDTO;
 import com.cursosdeti.apicursosdeti.entity.CourseTiEntity;
 import com.cursosdeti.apicursosdeti.repository.CourseTiRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,53 +17,72 @@ public class CourseTiService {
 
     private final CourseTiRepository courseTiRepository;
 
-    public CourseTiEntity getByid(Integer idCourse){
+    private final ObjectMapper objectMapper;
+
+    public CourseTiEntity converterParaCourseTiEntity (CourseTiDTO courseTiDTO) {
+        return objectMapper.convertValue(courseTiDTO, CourseTiEntity.class);
+    }
+
+    public CourseTiDTO converterParaCourseTiDTO (CourseTiEntity courseTi) {
+        return objectMapper.convertValue(courseTi, CourseTiDTO.class);
+    }
+
+    public CourseTiDTO getByid(Integer idCourse){
         Optional<CourseTiEntity> curso = Optional.ofNullable(courseTiRepository.findById(idCourse)
                 .orElseThrow(() -> new IllegalArgumentException("Curso não encontrado")));
 
-        return curso.get();
+        return this.converterParaCourseTiDTO(curso.get());
     }
 
-    public CourseTiEntity create (CourseTiEntity entity){
+    public CourseTiDTO create (CourseTiDTO courseTiDTO){
 
         CourseTiEntity courseTi = new CourseTiEntity();
-        courseTi.setCourseName(entity.getCourseName());
-        courseTi.setCity(entity.getCity());
-        courseTi.setInstitution(entity.getInstitution());
-        courseTi.setPeriod(entity.getPeriod());
-        courseTi.setModality(entity.getModality());
+        courseTi.setCourseName(courseTiDTO.getCourseName());
+        courseTi.setCity(courseTiDTO.getCity());
+        courseTi.setInstitution(courseTiDTO.getInstitution());
+        courseTi.setPeriod(courseTiDTO.getPeriod());
+        courseTi.setModality(courseTiDTO.getModality());
         courseTiRepository.save(courseTi);
-        return courseTi;
+        return this.converterParaCourseTiDTO(courseTi);
     }
 
-    public CourseTiEntity update (CourseTiEntity entity, Integer idCourse){
-        CourseTiEntity courseTi = getByid(idCourse);
-        if (entity.getCity() != null){
-            courseTi.setCity(entity.getCity());
+    public CourseTiDTO update (CourseTiDTO courseTiDTO, Integer idCourse){
+
+        CourseTiDTO courseUpdate = getByid(idCourse);
+        CourseTiEntity courseTi = converterParaCourseTiEntity(courseUpdate);
+
+
+        if (courseTiDTO.getCity() != null){
+            courseTi.setCity(courseTiDTO.getCity());
         }
-        if (entity.getCourseName() != null){
-            courseTi.setCourseName(entity.getCourseName());
+        if (courseTiDTO.getCourseName() != null){
+            courseTi.setCourseName(courseTiDTO.getCourseName());
         }
-        if (entity.getInstitution() != null){
-            courseTi.setInstitution(entity.getInstitution());
+        if (courseTiDTO.getInstitution() != null){
+            courseTi.setInstitution(courseTiDTO.getInstitution());
         }
-        if (entity.getPeriod() != null){
-            courseTi.setPeriod(entity.getPeriod());
+        if (courseTiDTO.getPeriod() != null){
+            courseTi.setPeriod(courseTiDTO.getPeriod());
         }
-        if (entity.getModality() != null){
-            courseTi.setModality(entity.getModality());
+        if (courseTiDTO.getModality() != null){
+            courseTi.setModality(courseTiDTO.getModality());
         }
         courseTiRepository.save(courseTi);
-        return courseTi;
+
+        return this.converterParaCourseTiDTO(courseTi);
     }
 
     public void delete (Integer idCourse){
-        CourseTiEntity courseTi = getByid(idCourse);
+        CourseTiDTO courseDelete = getByid(idCourse);
+        CourseTiEntity courseTi = converterParaCourseTiEntity(courseDelete);
         courseTiRepository.delete(courseTi);
     }
 
-    public Page<CourseTiEntity> findAll(Pageable pageable) {
-        return courseTiRepository.findAll(pageable);
+    public List<CourseTiDTO> findAll() {
+        return courseTiRepository.findAll()
+                .stream()
+                .map(this::converterParaCourseTiDTO)
+                .toList();
     }
 
 }

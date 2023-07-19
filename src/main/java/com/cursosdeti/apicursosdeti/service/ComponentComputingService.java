@@ -3,6 +3,7 @@ package com.cursosdeti.apicursosdeti.service;
 import com.cursosdeti.apicursosdeti.dto.PageDTO;
 import com.cursosdeti.apicursosdeti.dto.components.create.ComponentComputingCreateDTO;
 import com.cursosdeti.apicursosdeti.dto.components.create.ComponentComputingDTO;
+import com.cursosdeti.apicursosdeti.dto.courseTi.CourseTiDTO;
 import com.cursosdeti.apicursosdeti.entity.ComponentComputingEntity;
 import com.cursosdeti.apicursosdeti.entity.CourseTiEntity;
 import com.cursosdeti.apicursosdeti.repository.ComponentComputingRepository;
@@ -58,7 +59,8 @@ public class ComponentComputingService {
 
     public ComponentComputingDTO create (ComponentComputingCreateDTO componentComputing, Integer idCourseTi){
 
-        CourseTiEntity courseTi = courseTiService.getByid(idCourseTi);
+        CourseTiDTO courseTiDTO = courseTiService.getByid(idCourseTi);
+        CourseTiEntity courseTi = courseTiService.converterParaCourseTiEntity(courseTiDTO);
 
         ComponentComputingEntity computingEntity = converterComputingEntity(componentComputing);
         computingEntity.setClassHours(componentComputing.getClassHours());

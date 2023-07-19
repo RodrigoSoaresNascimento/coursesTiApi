@@ -1,5 +1,6 @@
 package com.cursosdeti.apicursosdeti.service;
 
+import com.cursosdeti.apicursosdeti.dto.courseTi.CourseTiDTO;
 import com.cursosdeti.apicursosdeti.entity.ComponentOptionalEntity;
 import com.cursosdeti.apicursosdeti.entity.CourseTiEntity;
 import com.cursosdeti.apicursosdeti.repository.ComponentOptionalRepository;
@@ -30,7 +31,8 @@ public class ComponentOptionalService {
 
     public ComponentOptionalEntity create (ComponentOptionalEntity optionalComponent, Integer idCourseTi){
 
-        CourseTiEntity courseTi = courseTiService.getByid(idCourseTi);
+        CourseTiDTO courseTiDTO = courseTiService.getByid(idCourseTi);
+        CourseTiEntity courseTi = courseTiService.converterParaCourseTiEntity(courseTiDTO);
 
         ComponentOptionalEntity optionalEntity = new ComponentOptionalEntity();
         optionalEntity.setClassHours(optionalComponent.getClassHours());
