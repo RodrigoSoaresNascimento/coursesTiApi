@@ -1,8 +1,10 @@
 package com.cursosdeti.apicursosdeti.entity;
 
+import com.cursosdeti.apicursosdeti.enums.CourseOptions;
 import com.cursosdeti.apicursosdeti.enums.Modality;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Where;
 
 import java.util.Objects;
 import java.util.Set;
@@ -31,6 +33,17 @@ public class CourseTiEntity {
 
     @Column(name = "city")
     private String city;
+
+    @Column(name = "soft_deleted")
+    private CourseOptions disabled;
+
+    public CourseOptions getDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(CourseOptions disabled) {
+        this.disabled = disabled;
+    }
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY,

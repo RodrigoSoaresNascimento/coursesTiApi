@@ -1,7 +1,9 @@
 package com.cursosdeti.apicursosdeti.service;
 
 import com.cursosdeti.apicursosdeti.dto.courseTi.CourseTiDTO;
+import com.cursosdeti.apicursosdeti.dto.courseTi.CourseTiDisableDTO;
 import com.cursosdeti.apicursosdeti.entity.CourseTiEntity;
+import com.cursosdeti.apicursosdeti.enums.CourseOptions;
 import com.cursosdeti.apicursosdeti.repository.CourseTiRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
@@ -42,6 +44,7 @@ public class CourseTiService {
         courseTi.setInstitution(courseTiDTO.getInstitution());
         courseTi.setPeriod(courseTiDTO.getPeriod());
         courseTi.setModality(courseTiDTO.getModality());
+        courseTi.setDisabled(CourseOptions.HABILITAR);
         courseTiRepository.save(courseTi);
         return this.converterParaCourseTiDTO(courseTi);
     }
@@ -81,8 +84,18 @@ public class CourseTiService {
     public List<CourseTiDTO> findAll() {
         return courseTiRepository.findAll()
                 .stream()
+                .filter(courseTi -> courseTi.getDisabled() != CourseOptions.DESABILITAR )
                 .map(this::converterParaCourseTiDTO)
                 .toList();
+    }
+
+    public CourseTiDisableDTO disableCourseTi (Integer idCourseTi, CourseOptions options){
+
+        CourseTiEntity courseTi = converterParaCourseTiEntity(getByid(idCourseTi));
+        courseTi.setDisabled(options);
+        courseTiRepository.save(courseTi);
+        return objectMapper.convertValue(courseTi, CourseTiDisableDTO.class);
+
     }
 
 }

@@ -1,13 +1,30 @@
 package com.cursosdeti.apicursosdeti.dto.courseTi;
 
 import com.cursosdeti.apicursosdeti.enums.Modality;
+import jakarta.validation.constraints.*;
 
 public class CourseTiCreateDTO {
 
+    @NotNull
+    @NotBlank
+    @Size(min = 3, max = 255, message = "O tamanho não pode ser menor que 3 caracteres")
     private String courseName;
+
+    @NotNull
+    @NotBlank
+    @Size(min = 3, max = 255, message = "O tamanho não pode ser menor que 3 caracteres")
     private String institution;
+
+    @NotNull
     private Modality modality;
+
+    @NotNull
+    @NotBlank
     private String period;
+
+    @NotNull
+    @NotBlank
+    @Size(min = 3, max = 255, message = "O tamanho não pode ser menor que 3 caracteres")
     private String city;
 
     public CourseTiCreateDTO() {
