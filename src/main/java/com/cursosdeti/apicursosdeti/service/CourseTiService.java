@@ -4,6 +4,7 @@ import com.cursosdeti.apicursosdeti.dto.courseTi.CourseTiDTO;
 import com.cursosdeti.apicursosdeti.dto.courseTi.CourseTiDisableDTO;
 import com.cursosdeti.apicursosdeti.entity.CourseTiEntity;
 import com.cursosdeti.apicursosdeti.enums.CourseOptions;
+import com.cursosdeti.apicursosdeti.exception.RecordNotFoundException;
 import com.cursosdeti.apicursosdeti.repository.CourseTiRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
@@ -31,7 +32,7 @@ public class CourseTiService {
 
     public CourseTiDTO getByid(Integer idCourse){
         Optional<CourseTiEntity> curso = Optional.ofNullable(courseTiRepository.findById(idCourse)
-                .orElseThrow(() -> new IllegalArgumentException("Curso não encontrado")));
+                .orElseThrow(() -> new RecordNotFoundException(idCourse)));
 
         return this.converterParaCourseTiDTO(curso.get());
     }
