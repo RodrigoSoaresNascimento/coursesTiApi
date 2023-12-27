@@ -2,12 +2,13 @@ package com.cursosdeti.apicursosdeti.controller;
 
 import com.cursosdeti.apicursosdeti.dto.PageDTO;
 import com.cursosdeti.apicursosdeti.dto.components.create.ComponentComputingDTO;
-import com.cursosdeti.apicursosdeti.entity.ComponentComputingEntity;
 import com.cursosdeti.apicursosdeti.service.ComponentComputingService;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/computingCourses")
@@ -18,30 +19,32 @@ public class ComponentComputingController {
     private final ComponentComputingService computingService;
 
     @GetMapping("/find-by-id/{idCourse}")
-    public ComponentComputingDTO findById(@PathVariable("idCourse") Integer idCourse){
-        return computingService.getById(idCourse);
+    public ResponseEntity<ComponentComputingDTO> findById(@PathVariable("idCourse") Integer idCourse){
+        return ResponseEntity.ok().body(computingService.getById(idCourse));
     }
 
     @GetMapping("/findAll")
-    public Page<ComponentComputingEntity> searchCourses (Pageable pageable) {
-        return computingService.findAll(pageable);
+    public List<ComponentComputingDTO> searchCourses () {
+        return computingService.findAll();
     }
 
     @PutMapping("/update-course")
-    public ComponentComputingEntity updateCourse (@RequestParam Integer idCourse,
-                                        @RequestBody ComponentComputingEntity computingEntity){
-        return computingService.update(computingEntity, idCourse);
+    public ResponseEntity<ComponentComputingDTO> updateCourse (@RequestParam Integer idCourse,
+                                        @RequestBody ComponentComputingDTO computingDTO){
+        return ResponseEntity.ok().body(computingService.update(computingDTO, idCourse));
     }
 
     @DeleteMapping("/delete/{idCurso}")
-    public void delete (@PathVariable("idCurso") Integer idCourse){
+    public  ResponseEntity<Void> delete (@PathVariable("idCurso") Integer idCourse){
         computingService.delete(idCourse);
+        return ResponseEntity.noContent().<Void>build();
     }
 
     @PostMapping("/add/{idCourse}")
-    public ComponentComputingDTO addCourse (@RequestBody ComponentComputingDTO componentComputing,
+    public ResponseEntity<ComponentComputingDTO> addCourse (@RequestBody ComponentComputingDTO componentComputing,
                                                @RequestParam Integer idCourseTi) {
-        return computingService.create(componentComputing, idCourseTi);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(computingService.create(componentComputing, idCourseTi));
     }
 
     @GetMapping("/paginacao-computing")

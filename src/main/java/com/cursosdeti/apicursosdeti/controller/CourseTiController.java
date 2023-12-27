@@ -2,11 +2,18 @@ package com.cursosdeti.apicursosdeti.controller;
 
 import com.cursosdeti.apicursosdeti.dto.courseTi.CourseTiDTO;
 import com.cursosdeti.apicursosdeti.dto.courseTi.CourseTiDisableDTO;
+import com.cursosdeti.apicursosdeti.dto.courseTi.CourseTiPageDTO;
 import com.cursosdeti.apicursosdeti.enums.CourseOptions;
+import com.cursosdeti.apicursosdeti.enums.Modality;
+import com.cursosdeti.apicursosdeti.enums.Period;
 import com.cursosdeti.apicursosdeti.service.CourseTiService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,11 +37,25 @@ public class CourseTiController {
         return courseTiService.findAll();
     }
 
+
+    @GetMapping("/findPages")
+    public CourseTiPageDTO coursesTiDTOPages (    @RequestParam(defaultValue = "0")
+                                                  @PositiveOrZero Integer pageNumber,
+                                                  @RequestParam(defaultValue = "10")
+                                                  @Positive
+                                                  @Max(20)
+                                                  Integer size
+    ){
+        return courseTiService.PageList(pageNumber,size);
+    }
+
     @PutMapping("/update-course")
     public ResponseEntity<CourseTiDTO> updateCourse (
+                                                         @Valid @RequestBody CourseTiDTO cursoUpdate,
                                                          @RequestParam Integer idCourse,
-                                                         @Valid @RequestBody CourseTiDTO cursoUpdate){
-        return ResponseEntity.ok().body(courseTiService.update(cursoUpdate, idCourse));
+                                                         @RequestParam Period period,
+                                                         @RequestParam Modality modality){
+        return ResponseEntity.ok().body(courseTiService.update(cursoUpdate, idCourse, period, modality));
     }
 
     @DeleteMapping("/delete/{idCurso}")
@@ -43,10 +64,10 @@ public class CourseTiController {
         return ResponseEntity.noContent().<Void>build();
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<CourseTiDTO> addCourse (@Valid @RequestBody CourseTiDTO courseTi) {
+    @PostMapping("/add" )
+    public ResponseEntity<CourseTiDisableDTO> addCourse (@Valid @RequestBody CourseTiDTO courseTi, @RequestParam Period period, @RequestParam Modality modality) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(courseTiService.create(courseTi));
+                .body(courseTiService.create(courseTi,period, modality));
     }
 
     @PutMapping("/disable-course")

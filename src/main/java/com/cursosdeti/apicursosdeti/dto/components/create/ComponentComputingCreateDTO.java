@@ -1,18 +1,31 @@
 package com.cursosdeti.apicursosdeti.dto.components.create;
 
+import com.cursosdeti.apicursosdeti.dto.courseTi.CourseTiDTO;
+
 public class ComponentComputingCreateDTO {
 
     private String courseName;
     private Integer classHours;
     private String syllabus;
 
-    public ComponentComputingCreateDTO(String courseName, Integer classHours, String syllabus) {
+    private CourseTiDTO courseTiDTO;
+
+    public ComponentComputingCreateDTO(String courseName, Integer classHours, String syllabus, CourseTiDTO courseTiDTO) {
         this.courseName = courseName;
         this.classHours = classHours;
         this.syllabus = syllabus;
+        this.courseTiDTO = courseTiDTO;
     }
 
     public ComponentComputingCreateDTO() {
+    }
+
+    public CourseTiDTO getCourseTiDTO() {
+        return courseTiDTO;
+    }
+
+    public void setCourseTiDTO(CourseTiDTO courseTiDTO) {
+        this.courseTiDTO = courseTiDTO;
     }
 
     public String getCourseName() {
@@ -37,5 +50,14 @@ public class ComponentComputingCreateDTO {
 
     public void setSyllabus(String syllabus) {
         this.syllabus = syllabus;
+    }
+
+    @Override
+    public String toString() {
+        return "ComponentComputingCreateDTO{" +
+                "courseName='" + courseName + '\'' +
+                ", classHours=" + classHours +
+                ", syllabus='" + syllabus + '\'' +
+                '}';
     }
 }

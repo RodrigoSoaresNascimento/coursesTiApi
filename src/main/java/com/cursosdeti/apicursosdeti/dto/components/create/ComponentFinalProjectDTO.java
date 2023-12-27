@@ -1,6 +1,6 @@
 package com.cursosdeti.apicursosdeti.dto.components.create;
 
-public class ComponentFinalProjectDTO extends ComponentComputingCreateDTO{
+public class ComponentFinalProjectDTO extends ComponentFinalProjectCreateDTO{
 
     private Integer idCurso;
 

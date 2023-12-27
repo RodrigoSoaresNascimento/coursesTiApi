@@ -1,24 +1,28 @@
 package com.cursosdeti.apicursosdeti.dto.courseTi;
 
+import com.cursosdeti.apicursosdeti.dto.components.create.ComponentComputingDTO;
 import com.cursosdeti.apicursosdeti.enums.Modality;
+import com.cursosdeti.apicursosdeti.enums.Period;
+
+import java.util.Set;
 
 public class CourseTiDTO extends CourseTiCreateDTO {
 
-    public CourseTiDTO(String courseName, String institution, Modality modality, String period, String city, Integer _idCourse) {
-        super(courseName, institution, modality, period, city);
-        this._idCourse = _idCourse;
+    public CourseTiDTO(String courseName, String institution, String city, Modality modality, Period period, Set<ComponentComputingDTO> componentComputingDTOSet, Integer idCourse) {
+        super(courseName, institution, city, modality, period, componentComputingDTOSet);
+        this.idCourse = idCourse;
     }
 
     public CourseTiDTO() {
     }
 
-    private Integer _idCourse;
+    private Integer idCourse;
 
     public Integer getIdCourse() {
-        return _idCourse;
+        return idCourse;
     }
 
     public void setIdCourse(Integer idCourse) {
-        this._idCourse = idCourse;
+        this.idCourse = idCourse;
     }
 }

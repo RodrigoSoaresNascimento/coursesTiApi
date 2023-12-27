@@ -2,9 +2,11 @@ package com.cursosdeti.apicursosdeti.entity;
 
 import com.cursosdeti.apicursosdeti.enums.CourseOptions;
 import com.cursosdeti.apicursosdeti.enums.Modality;
+import com.cursosdeti.apicursosdeti.enums.Period;
+import com.cursosdeti.apicursosdeti.enums.converter.ModalityConverter;
+import com.cursosdeti.apicursosdeti.enums.converter.PeriodConverter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import org.hibernate.annotations.Where;
 
 import java.util.Objects;
 import java.util.Set;
@@ -26,10 +28,12 @@ public class CourseTiEntity {
     private String institution;
 
     @Column(name = "modality")
+    @Convert(converter = ModalityConverter.class)
     private Modality modality;
 
     @Column(name = "period")
-    private String period;
+    @Convert(converter = PeriodConverter.class)
+    private Period period;
 
     @Column(name = "city")
     private String city;
@@ -47,32 +51,38 @@ public class CourseTiEntity {
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY,
-            mappedBy = "course")
+            mappedBy = "course",
+            cascade = CascadeType.ALL)
     private Set<ComponentHumanAndSocialEntity> humanAndSocialComponents;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY,
-            mappedBy = "course")
+            mappedBy = "course",
+            cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ComponentComputingEntity> computingComponents;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY,
-            mappedBy = "course")
+            mappedBy = "course",
+            cascade = CascadeType.ALL)
     private Set<ComponentFinalProjectEntity> finalProjectComponents;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY,
-            mappedBy = "course")
+            mappedBy = "course",
+            cascade = CascadeType.ALL)
     private Set<ComponentOptionalEntity> optionalComponents;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY,
-            mappedBy = "course")
+            mappedBy = "course",
+            cascade = CascadeType.ALL)
     private Set<ComponentMathEntity> mathComponents;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY,
-            mappedBy = "course")
+            mappedBy = "course",
+            cascade = CascadeType.ALL)
     private Set<ComponentPhysicsEntity> physicsComponents;
 
     public Set<ComponentHumanAndSocialEntity> getHumanAndSocialComponents() {
@@ -96,7 +106,12 @@ public class CourseTiEntity {
     }
 
     public void setFinalProjectComponents(Set<ComponentFinalProjectEntity> finalProjectComponents) {
-        this.finalProjectComponents = finalProjectComponents;
+        if (this.finalProjectComponents != null){
+            this.finalProjectComponents.clear();
+            this.finalProjectComponents.addAll(finalProjectComponents);
+        }else {
+            this.finalProjectComponents = finalProjectComponents;
+        }
     }
 
     public Set<ComponentOptionalEntity> getOptionalComponents() {
@@ -156,10 +171,10 @@ public class CourseTiEntity {
     }
 
     public String getPeriod() {
-        return period;
+        return period.getPeriod();
     }
 
-    public void setPeriod(String period) {
+    public void setPeriod(Period period) {
         this.period = period;
     }
 

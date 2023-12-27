@@ -1,17 +1,23 @@
 package com.cursosdeti.apicursosdeti.enums;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.Arrays;
+
 public enum CourseOptions {
 
-    HABILITAR("S"),
-    DESABILITAR("N");
+    HABILITAR(0),
+    DESABILITAR(1);
 
-    private String option;
+    private Integer option;
 
-    CourseOptions(String option) {
+    CourseOptions(Integer option) {
         this.option = option;
     }
 
-    public String getModality() {
+    public Integer getOptions() {
         return option;
     }
+
+
 }

@@ -9,14 +9,13 @@ import com.cursosdeti.apicursosdeti.entity.CourseTiEntity;
 import com.cursosdeti.apicursosdeti.repository.ComponentComputingRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -30,8 +29,8 @@ public class ComponentComputingService {
 
     private final ObjectMapper objectMapper;
 
-    public ComponentComputingEntity converterComputingEntity (ComponentComputingCreateDTO computingCreateDTO) {
-        return objectMapper.convertValue(computingCreateDTO, ComponentComputingEntity.class);
+    public ComponentComputingEntity converterComputingEntity (ComponentComputingDTO componentComputingDTO) {
+        return objectMapper.convertValue(componentComputingDTO, ComponentComputingEntity.class);
     }
 
     public ComponentComputingDTO converterComputingDTO(ComponentComputingEntity computing) {
@@ -62,7 +61,7 @@ public class ComponentComputingService {
         CourseTiDTO courseTiDTO = courseTiService.getByid(idCourseTi);
         CourseTiEntity courseTi = courseTiService.converterParaCourseTiEntity(courseTiDTO);
 
-        ComponentComputingEntity computingEntity = converterComputingEntity(componentComputing);
+        ComponentComputingEntity computingEntity = new ComponentComputingEntity();
         computingEntity.setClassHours(componentComputing.getClassHours());
         computingEntity.setCourseName(componentComputing.getCourseName());
         computingEntity.setSyllabus(componentComputing.getSyllabus());
@@ -72,7 +71,7 @@ public class ComponentComputingService {
         return computingDTO;
     }
 
-    public ComponentComputingEntity update (ComponentComputingEntity componentComputing, Integer idCourse){
+    public ComponentComputingDTO update (ComponentComputingDTO componentComputing, Integer idCourse){
 
         ComponentComputingDTO computingDTO = getById(idCourse);
         ComponentComputingEntity computingEntity = converterComputingEntity(computingDTO);
@@ -88,7 +87,7 @@ public class ComponentComputingService {
             computingEntity.setSyllabus(componentComputing.getSyllabus());
         }
         componentComputingRepository.save(computingEntity);
-        return computingEntity;
+        return componentComputing;
     }
 
     public void delete (Integer idCourse){
@@ -97,7 +96,10 @@ public class ComponentComputingService {
         componentComputingRepository.delete(computingEntity);
     }
 
-    public Page<ComponentComputingEntity> findAll (Pageable pageable){
-        return componentComputingRepository.findAll(pageable);
+    public List<ComponentComputingDTO> findAll (){
+        return componentComputingRepository.findAll()
+                .stream()
+                .map(this::converterComputingDTO)
+                .collect(Collectors.toList());
     }
 }

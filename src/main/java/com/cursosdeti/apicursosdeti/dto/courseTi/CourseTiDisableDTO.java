@@ -18,16 +18,16 @@ public class CourseTiDisableDTO {
 
     private CourseOptions options;
 
-    private Integer _idCourse;
+    private Integer idCourse;
 
-    public CourseTiDisableDTO(String courseName, String institution, Modality modality, String period, String city, CourseOptions options, Integer _idCourse) {
+    public CourseTiDisableDTO(String courseName, String institution, Modality modality, String period, String city, CourseOptions options, Integer idCourse) {
         this.courseName = courseName;
         this.institution = institution;
         this.modality = modality;
         this.period = period;
         this.city = city;
         this.options = options;
-        this._idCourse = _idCourse;
+        this.idCourse = idCourse;
     }
 
     public CourseOptions getOptions() {
@@ -58,7 +58,7 @@ public class CourseTiDisableDTO {
         return city;
     }
 
-    public Integer get_idCourse() {
-        return _idCourse;
+    public Integer getIdCourse() {
+        return idCourse;
     }
 }
